@@ -4,7 +4,7 @@ iCal package for Go (Golang)
 
 ## Installation
 
-    go get https://github.com/laurent22/ical-go
+    go get github.com/laurent22/ical-go
 
 ## Status
 
