@@ -89,6 +89,14 @@ func parseTextType(lines []string, lineIndex int) (string, int) {
 	return unescapeTextType(output), lineIndex
 }
 
+func escapeTextType(input string) string {
+	output := strings.Replace(input, "\\", "\\\\", -1)
+	output = strings.Replace(output, ";", "\\;", -1)
+	output = strings.Replace(output, ",", "\\,", -1)
+	output = strings.Replace(output, "\n", "\\n", -1)
+	return output
+}
+
 func unescapeTextType(s string) string {
 	s = strings.Replace(s, "\\;", ";", -1)
 	s = strings.Replace(s, "\\,", ",", -1)
