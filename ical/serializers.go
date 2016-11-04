@@ -62,6 +62,7 @@ func (this *calItemSerializer) serializeItem() {
 	this.dtstart()
 	this.dtend()
 	this.summary()
+  this.description()
 	this.location()
 	this.end()
 }
@@ -80,6 +81,10 @@ func (this *calItemSerializer) uid() {
 
 func (this *calItemSerializer) summary() {
 	this.serializeStringProp("SUMMARY", this.item.Summary)
+}
+
+func (this *calItemSerializer) description() {
+	this.serializeStringProp("DESCRIPTION", this.item.Description)
 }
 
 func (this *calItemSerializer) location() {

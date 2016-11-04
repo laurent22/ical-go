@@ -7,6 +7,7 @@ import (
 type CalendarItem struct {
 	Id string
 	Summary string
+	Description string
 	Location string
 	CreatedAtUTC *time.Time
 	ModifiedAtUTC *time.Time

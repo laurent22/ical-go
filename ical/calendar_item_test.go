@@ -1,6 +1,7 @@
 package ical
 
 import (
+  "strings"
   "testing"
   "time"
 )
@@ -66,14 +67,25 @@ func TestCalendarItemSerialize(t *testing.T) {
     EndAt: &endsAt,
     Summary: "Foo Bar",
     Location: "Berlin\nGermany",
+    Description: "Lorem\nIpsum",
   }
 
   // expects that DTSTART and DTEND be in UTC (Z)
   // expects that string values (LOCATION for example) be escaped
-  expected := "BEGIN:VEVENT\nUID:123\nCREATED:20100101T120001Z\nLAST-MODIFIED:20100101T120002Z\nDTSTART:20100101T120003Z\nDTEND:20100101T120004Z\nSUMMARY:Foo Bar\nLOCATION:Berlin\\nGermany\nEND:VEVENT"
+  expected := `
+BEGIN:VEVENT
+UID:123
+CREATED:20100101T120001Z
+LAST-MODIFIED:20100101T120002Z
+DTSTART:20100101T120003Z
+DTEND:20100101T120004Z
+SUMMARY:Foo Bar
+DESCRIPTION:Lorem\nIpsum
+LOCATION:Berlin\nGermany
+END:VEVENT`
 
   output := item.Serialize()
-  if output != expected {
+  if output != strings.TrimSpace(expected) {
     t.Error("Expected calendar item serialization to be:\n", expected, "\n\nbut got:\n", output)
   }
 }
