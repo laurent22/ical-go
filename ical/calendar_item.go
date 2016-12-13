@@ -28,12 +28,8 @@ func (this *CalendarItem) Serialize() string {
 	return this.serializeWithBuffer(buffer)
 }
 
-func (this *CalendarItem) AsICS() string {
-	calendar := Calendar {
-		Items: []CalendarItem{*this},
-	}
-
-	return calendar.Serialize()
+func (this *CalendarItem) ToICS() string {
+	return this.Serialize()
 }
 
 func (this *CalendarItem) serializeWithBuffer(buffer *strBuffer) string {

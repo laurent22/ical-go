@@ -11,3 +11,7 @@ func (this *Calendar) Serialize() string {
 	}
 	return serializer.serialize()
 }
+
+func (this *Calendar) ToICS() string {
+	return this.Serialize()
+}
