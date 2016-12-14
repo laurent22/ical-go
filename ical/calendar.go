@@ -1,7 +1,7 @@
 package ical
 
 type Calendar struct {
-	Items []CalendarItem
+	Items []CalendarEvent
 }
 
 func (this *Calendar) Serialize() string {

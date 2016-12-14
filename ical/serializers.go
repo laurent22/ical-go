@@ -40,21 +40,21 @@ func (this *calSerializer) items() {
 	}
 }
 
-type calItemSerializer struct {
-	item *CalendarItem
+type calEventSerializer struct {
+	event *CalendarEvent
 	buffer *strBuffer
 }
 
 const (
-	itemSerializerTimeFormat = "20060102T150405Z"
+	eventSerializerTimeFormat = "20060102T150405Z"
 )
 
-func (this *calItemSerializer) serialize() string {
-	this.serializeItem()
+func (this *calEventSerializer) serialize() string {
+	this.serializeEvent()
 	return strings.TrimSpace(this.buffer.String())
 }
 
-func (this *calItemSerializer) serializeItem() {
+func (this *calEventSerializer) serializeEvent() {
 	this.begin()
 	this.uid()
 	this.created()
@@ -67,55 +67,55 @@ func (this *calItemSerializer) serializeItem() {
 	this.end()
 }
 
-func (this *calItemSerializer) begin() {
+func (this *calEventSerializer) begin() {
 	this.buffer.Write("BEGIN:VEVENT\n")
 }
 
-func (this *calItemSerializer) end() {
+func (this *calEventSerializer) end() {
 	this.buffer.Write("END:VEVENT\n")
 }
 
-func (this *calItemSerializer) uid() {
-	this.serializeStringProp("UID", this.item.Id)
+func (this *calEventSerializer) uid() {
+	this.serializeStringProp("UID", this.event.Id)
 }
 
-func (this *calItemSerializer) summary() {
-	this.serializeStringProp("SUMMARY", this.item.Summary)
+func (this *calEventSerializer) summary() {
+	this.serializeStringProp("SUMMARY", this.event.Summary)
 }
 
-func (this *calItemSerializer) description() {
-	this.serializeStringProp("DESCRIPTION", this.item.Description)
+func (this *calEventSerializer) description() {
+	this.serializeStringProp("DESCRIPTION", this.event.Description)
 }
 
-func (this *calItemSerializer) location() {
-	this.serializeStringProp("LOCATION", this.item.Location)
+func (this *calEventSerializer) location() {
+	this.serializeStringProp("LOCATION", this.event.Location)
 }
 
-func (this *calItemSerializer) dtstart() {
-	this.serializeTimeProp("DTSTART", this.item.StartAtUTC())
+func (this *calEventSerializer) dtstart() {
+	this.serializeTimeProp("DTSTART", this.event.StartAtUTC())
 }
 
-func (this *calItemSerializer) dtend() {
-	this.serializeTimeProp("DTEND", this.item.EndAtUTC())
+func (this *calEventSerializer) dtend() {
+	this.serializeTimeProp("DTEND", this.event.EndAtUTC())
 }
 
-func (this *calItemSerializer) created() {
-	this.serializeTimeProp("CREATED", this.item.CreatedAtUTC)
+func (this *calEventSerializer) created() {
+	this.serializeTimeProp("CREATED", this.event.CreatedAtUTC)
 }
 
-func (this *calItemSerializer) lastModified() {
-	this.serializeTimeProp("LAST-MODIFIED", this.item.ModifiedAtUTC)
+func (this *calEventSerializer) lastModified() {
+	this.serializeTimeProp("LAST-MODIFIED", this.event.ModifiedAtUTC)
 }
 
-func (this *calItemSerializer) serializeStringProp(name, value string) {
+func (this *calEventSerializer) serializeStringProp(name, value string) {
 	if value != "" {
 		escapedValue := escapeTextType(value)
 		this.buffer.Write("%s:%s\n", name, escapedValue)
 	}
 }
 
-func (this *calItemSerializer) serializeTimeProp(name string, value *time.Time) {
+func (this *calEventSerializer) serializeTimeProp(name string, value *time.Time) {
 	if value != nil {
-		this.buffer.Write("%s:%s\n", name, value.Format(itemSerializerTimeFormat))
+		this.buffer.Write("%s:%s\n", name, value.Format(eventSerializerTimeFormat))
 	}
 }

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type CalendarItem struct {
+type CalendarEvent struct {
 	Id string
 	Summary string
 	Description string
@@ -15,26 +15,26 @@ type CalendarItem struct {
 	EndAt *time.Time
 }
 
-func (this *CalendarItem) StartAtUTC() *time.Time {
+func (this *CalendarEvent) StartAtUTC() *time.Time {
 	return inUTC(this.StartAt)
 }
 
-func (this *CalendarItem) EndAtUTC() *time.Time {
+func (this *CalendarEvent) EndAtUTC() *time.Time {
 	return inUTC(this.EndAt)
 }
 
-func (this *CalendarItem) Serialize() string {
+func (this *CalendarEvent) Serialize() string {
 	buffer := new(strBuffer)
 	return this.serializeWithBuffer(buffer)
 }
 
-func (this *CalendarItem) ToICS() string {
+func (this *CalendarEvent) ToICS() string {
 	return this.Serialize()
 }
 
-func (this *CalendarItem) serializeWithBuffer(buffer *strBuffer) string {
-	serializer := calItemSerializer{
-		item: this,
+func (this *CalendarEvent) serializeWithBuffer(buffer *strBuffer) string {
+	serializer := calEventSerializer{
+		event: this,
 		buffer: buffer,
 	}
 	return serializer.serialize()

@@ -7,20 +7,20 @@ import (
 )
 
 func TestStartAndEndAtUTC(t *testing.T) {
-  item := CalendarItem{}
+  event := CalendarEvent{}
 
-  if item.StartAtUTC() != nil {
+  if event.StartAtUTC() != nil {
     t.Error("StartAtUTC should have been nil")
   }
-  if item.EndAtUTC() != nil {
+  if event.EndAtUTC() != nil {
     t.Error("EndAtUTC should have been nil")
   }
 
   tUTC := time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC)
-  item.StartAt = &tUTC
-  item.EndAt   = &tUTC
-  startTime := *(item.StartAtUTC())
-  endTime   := *(item.EndAtUTC())
+  event.StartAt = &tUTC
+  event.EndAt   = &tUTC
+  startTime := *(event.StartAtUTC())
+  endTime   := *(event.EndAtUTC())
 
   if startTime != tUTC {
     t.Error("StartAtUTC should have been", tUTC, ", but was", startTime)
@@ -35,10 +35,10 @@ func TestStartAndEndAtUTC(t *testing.T) {
     panic(err)
   }
   tNYK := tUTC.In(nyk)
-  item.StartAt = &tNYK
-  item.EndAt = &tNYK
-  startTime = *(item.StartAtUTC())
-  endTime   = *(item.EndAtUTC())
+  event.StartAt = &tNYK
+  event.EndAt = &tNYK
+  startTime = *(event.StartAtUTC())
+  endTime   = *(event.EndAtUTC())
 
   if startTime != tUTC {
     t.Error("StartAtUTC should have been", tUTC, ", but was", startTime)
@@ -48,7 +48,7 @@ func TestStartAndEndAtUTC(t *testing.T) {
   }
 }
 
-func TestCalendarItemSerialize(t *testing.T) {
+func TestCalendarEventSerialize(t *testing.T) {
   ny, err := time.LoadLocation("America/New_York")
   if err != nil {
     panic(err)
@@ -59,7 +59,7 @@ func TestCalendarItemSerialize(t *testing.T) {
   startsAt    := createdAt.Add(time.Second * 2).In(ny)
   endsAt      := createdAt.Add(time.Second * 3).In(ny)
 
-  item := CalendarItem {
+  event := CalendarEvent {
     Id: "123",
     CreatedAtUTC: &createdAt,
     ModifiedAtUTC: &modifiedAt,
@@ -84,8 +84,8 @@ DESCRIPTION:Lorem\nIpsum
 LOCATION:Berlin\nGermany
 END:VEVENT`
 
-  output := item.Serialize()
+  output := event.Serialize()
   if output != strings.TrimSpace(expected) {
-    t.Error("Expected calendar item serialization to be:\n", expected, "\n\nbut got:\n", output)
+    t.Error("Expected calendar event serialization to be:\n", expected, "\n\nbut got:\n", output)
   }
 }
