@@ -30,7 +30,9 @@ func parseCalendarNode(lines []string, lineIndex int) (*Node, bool, error, int) 
 		parameters = make(map[string]string)
 		for i := 1; i < len(splitted); i++ {
 			p := strings.Split(splitted[i], "=")
-			if len(p) != 2 { panic("Invalid parameter format: " + name) }
+			if len(p) != 2 {
+				return nil, false, errors.New("Invalid parameter format: " + name), lineIndex + 1
+			}
 			parameters[p[0]] = p[1]
 		}
 	}
