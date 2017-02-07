@@ -20,6 +20,20 @@ END:VCALENDAR
 	if err.Error() != errMsg {
 		t.Error("wrong error message, got: " + err.Error() + " but expected: " + errMsg )
 	}
+}
 
+func TestMissingEnd(t *testing.T) {
+data :=
+`
+BEGIN:VCALENDAR
+BEGIN:VEVENT
+UID:123
+END:VCALENDAR
+`
+	_, err := ParseCalendar(data)
 
+	errMsg := "Missing END tag"
+	if err.Error() != errMsg {
+		t.Error("wrong error message, got: " + err.Error() + " but expected: " + errMsg )
+	}
 }

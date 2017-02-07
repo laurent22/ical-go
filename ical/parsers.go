@@ -16,6 +16,8 @@ func ParseCalendar(data string) (*Node, error) {
 }
 
 func parseCalendarNode(lines []string, lineIndex int) (*Node, bool, error, int) {
+	numberOfLines := len(lines)
+
 	line := strings.TrimSpace(lines[lineIndex])
 	_ = log.Println
 	colonIndex := strings.Index(line, ":")
@@ -45,6 +47,9 @@ func parseCalendarNode(lines []string, lineIndex int) (*Node, bool, error, int) 
 		lineIndex = lineIndex + 1
 		for {
 			child, finished, err, newLineIndex := parseCalendarNode(lines, lineIndex)
+			if newLineIndex + 1 > numberOfLines {
+				return nil, false, errors.New("Missing END tag"), newLineIndex
+			}
 			if err != nil {
 				return nil, false, err, newLineIndex
 			} else if finished {
