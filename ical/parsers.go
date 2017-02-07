@@ -44,8 +44,10 @@ func parseCalendarNode(lines []string, lineIndex int) (*Node, bool, error, int) 
 		node.Type = 1
 		lineIndex = lineIndex + 1
 		for {
-			child, finished, _, newLineIndex := parseCalendarNode(lines, lineIndex)
-			if finished {
+			child, finished, err, newLineIndex := parseCalendarNode(lines, lineIndex)
+			if err != nil {
+				return nil, false, err, newLineIndex
+			} else if finished {
 				return node, false, nil, newLineIndex
 			} else {
 				if child != nil {
