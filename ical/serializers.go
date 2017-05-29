@@ -64,6 +64,7 @@ func (this *calEventSerializer) serializeEvent() {
 	this.summary()
   this.description()
 	this.location()
+	this.url()
 	this.end()
 }
 
@@ -89,6 +90,10 @@ func (this *calEventSerializer) description() {
 
 func (this *calEventSerializer) location() {
 	this.serializeStringProp("LOCATION", this.event.Location)
+}
+
+func (this *calEventSerializer) url() {
+	this.serializeStringProp("URL", this.event.Location)
 }
 
 func (this *calEventSerializer) dtstart() {

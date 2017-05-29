@@ -9,7 +9,8 @@ type CalendarEvent struct {
 	Summary string
 	Description string
 	Location string
-	CreatedAtUTC *time.Time
+	URL string
+	CreatedAtUTC  *time.Time
 	ModifiedAtUTC *time.Time
 	StartAt *time.Time
 	EndAt *time.Time

@@ -68,6 +68,7 @@ func TestCalendarEventSerialize(t *testing.T) {
     Summary: "Foo Bar",
     Location: "Berlin\nGermany",
     Description: "Lorem\nIpsum",
+		URL: "https://www.example.com",
   }
 
   // expects that DTSTART and DTEND be in UTC (Z)
@@ -82,6 +83,7 @@ DTEND:20100101T120004Z
 SUMMARY:Foo Bar
 DESCRIPTION:Lorem\nIpsum
 LOCATION:Berlin\nGermany
+URL:https://www.example.com
 END:VEVENT`
 
   output := event.Serialize()
