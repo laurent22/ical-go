@@ -48,6 +48,7 @@ func (this *Node) PropDate(name string, defaultValue time.Time) time.Time {
 		return defaultValue
 	}
 	tzid := node.Parameter("TZID", "")
+	allDay := node.Parameter("VALUE", "") == "DATE"
 	var output time.Time
 	var err error
 	if tzid != "" {
@@ -56,6 +57,8 @@ func (this *Node) PropDate(name string, defaultValue time.Time) time.Time {
 			panic(err)
 		}
 		output, err = time.ParseInLocation("20060102T150405", node.Value, loc)
+	} else if allDay {
+		output, err = time.Parse("20060102", node.Value)
 	} else {
 		output, err = time.Parse("20060102T150405Z", node.Value)
 	}
